@@ -1,19 +1,17 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { useAccount, useDisconnect, useEnsName } from "wagmi";
-import Discover from "./Components/Discover";
+import { Route, Routes } from "react-router-dom";
+import AuthLayout from "./_auth/AuthLayout";
+import ConnectWallet from "./_auth/ConnectWallet";
+import Choice from "./_auth/Choice";
 
 function App() {
-  const { address } = useAccount();
-  const { disconnect } = useDisconnect();
-  const { data: ensName } = useEnsName({ address });
-
-  console.log(address);
-
   return (
     <>
-      <ConnectButton chainStatus="none" showBalance={false} />
-      {/* <h1 className="text-red-500">Hello world!</h1> */}
-      <Discover />
+      <Routes>
+        <Route element={<AuthLayout />}>
+          <Route path={"/connect"} element={<ConnectWallet />} />
+          <Route path={"/choice"} element={<Choice />} />
+        </Route>
+      </Routes>
     </>
   );
 }

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* index.css */
+body {
+  background-color: #1a1a1a; /* Dark background color */
+  color: #ffffff; /* White text color for contrast */
+  margin: 0;
+  font-family: sans-serif;
+}
