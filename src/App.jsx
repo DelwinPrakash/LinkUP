@@ -1,7 +1,16 @@
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount, useDisconnect, useEnsName } from "wagmi";
+
 function App() {
+  const { address } = useAccount();
+  const { disconnect } = useDisconnect();
+  const { data: ensName } = useEnsName({ address });
+
+  console.log(address);
+
   return (
     <>
-      <h1 className="text-red-500">Hello world!</h1>
+      <ConnectButton chainStatus="none" showBalance={false} />
     </>
   );
 }
