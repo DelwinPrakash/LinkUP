@@ -1,21 +1,30 @@
 import { AppwriteException, ID, Query } from "appwrite";
 import { account, configAppwrite, databases } from "./config";
 
-//user is a objetct that passes the user's
+//user is a object that passes the user's
 //address
 //name
 //email
 //password
 
 export async function createUser(user) {
-  try {
-    const newUser = await account.create(walletAdd, email, password);
-    if (!newUser) throw error;
-    const data = storeDatabase(user);
-    return data;
-  } catch (error) {
+  console.log(user.walletAdd, user.email, user.password, user.name + " from api");
+  // try {
+  //   const newUser = await account.create(ID.unique(), user.email, user.password, user.name);
+  //   if (!newUser) throw error;
+  //   const data = storeDatabase(user);
+  //   return data;
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  const newUser = account.create(ID.unique(), user.email, user.password, user.name);
+  newUser.then((response) => {
+    console.log(response);
+    storeDatabase(user);
+  },
+  (error) => {
     console.log(error);
-  }
+  });
 }
 
 export async function storeDatabase(user) {
@@ -23,6 +32,7 @@ export async function storeDatabase(user) {
     const newUser = await databases.createDocument(
       configAppwrite.datebaseID,
       configAppwrite.userCollectionID,
+      ID.unique(),
       user
     );
 
@@ -31,3 +41,14 @@ export async function storeDatabase(user) {
     console.log(error);
   }
 }
+/*
+export const login = async (e) => {
+  e.preventDefault();
+
+  try {
+    await account.createEmailPasswordSession(user.email, user.password);
+  } catch (error) {
+    console.log(error);
+  }
+}
+*/
